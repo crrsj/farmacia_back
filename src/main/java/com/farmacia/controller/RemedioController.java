@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -35,7 +35,7 @@ public class RemedioController {
 	
 	private final RemedioService service;
 
-	@PostMapping("cadastro")
+	@PostMapping
 	public ResponseEntity<RemedioDto>cadastrarRemedio(@RequestBody @Valid RemedioDto remedio){
 		var cadastre = service.cadastrarRemedio(remedio);
 		var uri = ServletUriComponentsBuilder.fromCurrentRequest().path("remedio/cadastro/{id}")
@@ -43,19 +43,19 @@ public class RemedioController {
 		return ResponseEntity.created(uri).body(new RemedioDto(cadastre));
 	}
 	
-	@GetMapping("listar")
+	@GetMapping
 	public ResponseEntity<List<RemedioDto>>buscarTodos(){
 		var busca = service.listarTodos().stream().map(RemedioDto::new).toList();
 		return ResponseEntity.ok(busca);
 	}
 	
-	@GetMapping("buscar/{id}")
+	@GetMapping("{id}")
 	public ResponseEntity<?>buscarPorId(@PathVariable Long id){
 		var buscar = service.buscarPorId(id);
 		return ResponseEntity.ok().body(buscar);
 	}
 	
-	@PutMapping("atualizar")
+	@PutMapping
 	public ResponseEntity<RemedioDto> atualizar(@RequestBody @Valid RemedioDto remedio){
 		var atualiza = service.atualizar(remedio);
 		return ResponseEntity.ok().body(new RemedioDto(atualiza));
