@@ -38,7 +38,7 @@ public class RemedioController {
 	@PostMapping
 	public ResponseEntity<RemedioDto>cadastrarRemedio(@RequestBody @Valid RemedioDto remedio){
 		var cadastre = service.cadastrarRemedio(remedio);
-		var uri = ServletUriComponentsBuilder.fromCurrentRequest().path("remedio/cadastro/{id}")
+		var uri = ServletUriComponentsBuilder.fromCurrentRequest().path("remedio/{id}")
 		.buildAndExpand(cadastre.getId()).toUri();
 		return ResponseEntity.created(uri).body(new RemedioDto(cadastre));
 	}
